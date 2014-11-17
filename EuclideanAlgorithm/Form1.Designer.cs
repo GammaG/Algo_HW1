@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.numericUpDown_a = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_b = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,10 +41,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox_Method = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button_getGCD = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.diagramComboBox = new System.Windows.Forms.ComboBox();
             this.clearD = new System.Windows.Forms.Button();
+            this.BtnGenXN = new System.Windows.Forms.Button();
+            this.XNLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_a)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_b)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loops)).BeginInit();
@@ -125,17 +125,17 @@
             // 
             // button_loops
             // 
-            this.button_loops.Location = new System.Drawing.Point(207, 38);
+            this.button_loops.Location = new System.Drawing.Point(19, 95);
             this.button_loops.Name = "button_loops";
-            this.button_loops.Size = new System.Drawing.Size(135, 77);
+            this.button_loops.Size = new System.Drawing.Size(128, 23);
             this.button_loops.TabIndex = 7;
-            this.button_loops.Text = "Get GCD over loops";
+            this.button_loops.Text = "Generate Histogram";
             this.button_loops.UseVisualStyleBackColor = true;
-            this.button_loops.Click += new System.EventHandler(this.button_loops_Click);
+            this.button_loops.Click += new System.EventHandler(this.button_getHistogram_Click);
             // 
             // numericUpDown_loops
             // 
-            this.numericUpDown_loops.Location = new System.Drawing.Point(255, 15);
+            this.numericUpDown_loops.Location = new System.Drawing.Point(255, 17);
             this.numericUpDown_loops.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -168,12 +168,12 @@
             // 
             this.comboBox_Method.FormattingEnabled = true;
             this.comboBox_Method.Items.AddRange(new object[] {
-            "Subtraction",
-            "Modulo",
-            "PrimeFactors"});
+            "iterative exponentiation",
+            "recursive exponentiation",
+            "faster recursive exponentiation"});
             this.comboBox_Method.Location = new System.Drawing.Point(65, 68);
             this.comboBox_Method.Name = "comboBox_Method";
-            this.comboBox_Method.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_Method.Size = new System.Drawing.Size(250, 21);
             this.comboBox_Method.TabIndex = 10;
             // 
             // label4
@@ -185,47 +185,25 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Method:";
             // 
-            // button_getGCD
-            // 
-            this.button_getGCD.Location = new System.Drawing.Point(66, 95);
-            this.button_getGCD.Name = "button_getGCD";
-            this.button_getGCD.Size = new System.Drawing.Size(120, 23);
-            this.button_getGCD.TabIndex = 12;
-            this.button_getGCD.Text = "Get GCD";
-            this.button_getGCD.UseVisualStyleBackColor = true;
-            this.button_getGCD.Click += new System.EventHandler(this.button_getGCD_Click);
-            // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(369, 15);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(757, 593);
             this.chart1.TabIndex = 13;
             this.chart1.Text = "chart1";
             // 
-            // diagramComboBox
-            // 
-            this.diagramComboBox.FormattingEnabled = true;
-            this.diagramComboBox.Items.AddRange(new object[] {
-            "CPUTimes vs (a+b)/2",
-            "Steps vs (a+b)/2"});
-            this.diagramComboBox.Location = new System.Drawing.Point(65, 124);
-            this.diagramComboBox.Name = "diagramComboBox";
-            this.diagramComboBox.Size = new System.Drawing.Size(152, 21);
-            this.diagramComboBox.TabIndex = 14;
-            this.diagramComboBox.SelectedIndexChanged += new System.EventHandler(this.diagramComboBox_SelectedIndexChanged);
-            // 
             // clearD
             // 
-            this.clearD.Location = new System.Drawing.Point(233, 124);
+            this.clearD.Location = new System.Drawing.Point(19, 129);
             this.clearD.Name = "clearD";
             this.clearD.Size = new System.Drawing.Size(91, 23);
             this.clearD.TabIndex = 15;
@@ -233,15 +211,33 @@
             this.clearD.UseVisualStyleBackColor = true;
             this.clearD.Click += new System.EventHandler(this.clearD_Click);
             // 
+            // BtnGenXN
+            // 
+            this.BtnGenXN.Location = new System.Drawing.Point(162, 95);
+            this.BtnGenXN.Name = "BtnGenXN";
+            this.BtnGenXN.Size = new System.Drawing.Size(153, 23);
+            this.BtnGenXN.TabIndex = 16;
+            this.BtnGenXN.Text = "Generate X  and List<N>";
+            this.BtnGenXN.UseVisualStyleBackColor = true;
+            this.BtnGenXN.Click += new System.EventHandler(this.GenBtnXN);
+            // 
+            // XNLabel
+            // 
+            this.XNLabel.AutoSize = true;
+            this.XNLabel.Location = new System.Drawing.Point(172, 129);
+            this.XNLabel.Name = "XNLabel";
+            this.XNLabel.Size = new System.Drawing.Size(0, 13);
+            this.XNLabel.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1138, 645);
+            this.Controls.Add(this.XNLabel);
+            this.Controls.Add(this.BtnGenXN);
             this.Controls.Add(this.clearD);
-            this.Controls.Add(this.diagramComboBox);
             this.Controls.Add(this.chart1);
-            this.Controls.Add(this.button_getGCD);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox_Method);
             this.Controls.Add(this.label3);
@@ -275,10 +271,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox_Method;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button_getGCD;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.ComboBox diagramComboBox;
         private System.Windows.Forms.Button clearD;
+        private System.Windows.Forms.Button BtnGenXN;
+        private System.Windows.Forms.Label XNLabel;
     }
 }
 

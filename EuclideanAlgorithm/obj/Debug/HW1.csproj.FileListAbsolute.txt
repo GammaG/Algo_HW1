@@ -1,0 +1,9 @@
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\bin\Debug\EuclideanAlgorithm.exe.config
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\bin\Debug\EuclideanAlgorithm.exe
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\bin\Debug\EuclideanAlgorithm.pdb
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\obj\Debug\HW1.csprojResolveAssemblyReference.cache
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\obj\Debug\EuclideanAlgorithm.Form1.resources
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\obj\Debug\EuclideanAlgorithm.Properties.Resources.resources
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\obj\Debug\HW1.csproj.GenerateResource.Cache
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\obj\Debug\EuclideanAlgorithm.exe
+C:\Uni\Visual Studio\HW1\EuclideanAlgorithm\obj\Debug\EuclideanAlgorithm.pdb

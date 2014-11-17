@@ -12,82 +12,27 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace EuclideanAlgorithm
+
 {
+   
     public partial class Form1 : Form
     {
-        public static int numIterations;
-        Boolean alternativeDiagramm = true;
-        Boolean clearDiagramm = false;
+         int numOfLoops;
+         Boolean clearDiagramm = false;
+         ulong x = 0;
+         List<ulong> nList;
 
         public Form1()
         {
             InitializeComponent();
 
             comboBox_Method.SelectedIndex = 0;  //Sub
-            diagramComboBox.SelectedIndex = 0;
+         
         }
 
-        private void button_getGCD_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ulong l_a = Convert.ToUInt64(numericUpDown_a.Value);
-                ulong l_b = Convert.ToUInt64(numericUpDown_b.Value);
+      
 
-                Stopwatch timer = new Stopwatch();   //other way to initialize: Stopwatch timer = Stopwatch.StartNew();
-
-                timer.Start();
-
-                ulong gcd;
-
-                numIterations = 0;
-
-                switch (comboBox_Method.SelectedIndex)
-                {
-                    case 0:
-                        gcd = getGCDSub(l_a, l_b);
-                        textBox_Results.AppendText("\r\n Subtraction Method: GCD=" + gcd.ToString());
-                        break;
-                    case 1:
-                        gcd = getGCDMod(l_a, l_b);
-                        textBox_Results.AppendText("\r\n Modulo Method: GCD=" + gcd.ToString());
-                        break;
-                    case 2:
-                        gcd = getGCDPrimeFactorization(l_a, l_b);
-                        textBox_Results.AppendText("\r\n PrimeFactorization Method: GCD=" + gcd.ToString());
-                        break;
-                    default:
-                        return;
-                }
-
-
-               
-
-                timer.Stop();
-
-                textBox_Results.AppendText("\r\n CPU-time(ticks):" + timer.ElapsedTicks);
-                textBox_Results.AppendText("\r\n CPU-time(ms):" + timer.ElapsedMilliseconds);
-                textBox_Results.AppendText("\r\n Number of iterations:" + numIterations);
-            }
-            catch (Exception ex)
-            {
-                textBox_Results.AppendText("Your input is wasn't valid!");
-                Console.WriteLine(ex);
-            }
-        }
-
-        public static ulong getGCDMod(ulong a, ulong b)
-        {
-
-            while (b != 0)
-            {
-                numIterations++;
-                ulong t = b;
-                b = a % b;
-                a = t;
-            }
-            return a;
-        }
+      
 
         public static List<ulong> getPrimeNumbers(ulong n)
         {
@@ -95,7 +40,7 @@ namespace EuclideanAlgorithm
             List<ulong> primeNumbers = new List<ulong>();
             for (ulong i = 2; i <= n; i++)
             {
-                numIterations++;
+                
                 while (n % i == 0 )
                 {
                     
@@ -109,7 +54,7 @@ namespace EuclideanAlgorithm
             return primeNumbers;
         }
 
-        public static ulong getGCDPrimeFactorization(ulong a, ulong b)
+        public static ulong getHistogram(ulong a, ulong b)
         {
             
             List<ulong> primeNumbersA = getPrimeNumbers(a);
@@ -118,7 +63,7 @@ namespace EuclideanAlgorithm
             foreach (ulong _a in primeNumbersA){
                 foreach (ulong _b in primeNumbersB)
                 {
-                    numIterations++;
+                   
                     if (_a == _b & !commonFactors.Contains(_a))
                         commonFactors.Add(_a);
                 }
@@ -131,7 +76,7 @@ namespace EuclideanAlgorithm
             ulong x = 1;
             foreach (ulong factor in commonFactors)
             {
-                numIterations++;
+                
                 x *= factor;
             }
             return x;
@@ -149,7 +94,7 @@ namespace EuclideanAlgorithm
 
             while (b != 0)
             {
-                numIterations++;
+               
 
                 if (a > b)
                     a = a - b;
@@ -192,47 +137,44 @@ namespace EuclideanAlgorithm
 
 
         /** LOOPS */
-        private void button_loops_Click(object sender, EventArgs e)
+        private void button_getHistogram_Click(object sender, EventArgs e)
         {
             try
             {
-                int a = Convert.ToInt32(numericUpDown_a.Value);
-                int b = Convert.ToInt32(numericUpDown_b.Value);
-                int numOfLoops = (int)numericUpDown_loops.Value;
-                
-                ulong l_a = Convert.ToUInt64(a);
-                ulong l_b = Convert.ToUInt64(b);
 
-                List<ulong> randomListA = genRandomList(a, b, numOfLoops);
-                List<ulong> randomListB = genRandomList(a, b, numOfLoops);
+                if (nList == null)
+                {
+                    textBox_Results.AppendText("Please generate X and List<n> first!\n");
+                    return;
+                }
+               
 
                 List<long> listCPUTimes = new List<long>();
-                List<int> stepList = new List<int>();
+               
                
                 Stopwatch timer = new Stopwatch();   //other way to initialize: Stopwatch timer = Stopwatch.StartNew();
                 String mode = "";
                 for (int i = 0; i < numOfLoops; i++)
                 {
-                    numIterations = 0;
+                    
                     timer.Reset();
                     timer.Start();
-                    ulong _a = randomListA[i];
-                    ulong _b = randomListB[i];
+                   
                     
 
                     switch (comboBox_Method.SelectedIndex)
                     {
                         case 0:
-                            getGCDSub(_a, _b);
-                            mode = "Subtraction";
+                            func1(x, nList[i]);
+                            mode = "iterative exponentiation";
                             break;
                         case 1:
-                            getGCDMod(_a, _b);
-                            mode = "Modulo";
+                            func2(x, nList[i]);
+                            mode = "recursive exponentiation";
                             break;
                         case 2:
-                            getGCDPrimeFactorization(_a, _b);
-                            mode = "PrimeFactors";
+                            func3(x, nList[i]);
+                            mode = "faster recusive exponentiation";
                             break;
                         default:
                             return;
@@ -240,29 +182,13 @@ namespace EuclideanAlgorithm
 
                     timer.Stop();
                     listCPUTimes.Add(timer.ElapsedTicks);
-                    stepList.Add(numIterations);
-                    textBox_Results.AppendText("\r\n Iteration " + i.ToString() + ", CPU-time(ticks):" + timer.ElapsedTicks + ", Steps:" +  numIterations);
+
+                    int tI = i;
+                    tI++; 
+                    textBox_Results.AppendText("\r\n Iteration " + tI.ToString()  + ", CPU-time(ticks):" + timer.ElapsedTicks +" for n = "+nList[i]);
                 }
 
-
-                
-                switch (diagramComboBox.SelectedIndex)
-                {
-                    case 0:
-                     
-                        alternativeDiagramm = true;
-                        break;
-                    case 1:
-                       
-                        alternativeDiagramm = false;
-                        break;
-
-                    default:
-                        return;
-                }
-
-
-
+                      
                 //Get Mean and SD
                 double meanCPUTicks = getMean(listCPUTimes);
                 double varianceCPUTicks = getVariance(listCPUTimes);
@@ -275,13 +201,16 @@ namespace EuclideanAlgorithm
                 //add data to chart
                 String name = "StandardDeviation for\n"+mode;
 
+                chart1.Titles.Clear();
+                chart1.Titles.Add("CPUTime vs (x+n)/2");
+
                 if (clearDiagramm)
                 {
                     chart1.Series.Clear();
                 }
 
 
-                if (!chart1.Series.IsUniqueName(mode) & alternativeDiagramm)
+                if (!chart1.Series.IsUniqueName(mode))
                 {
                     chart1.Series.Remove(chart1.Series[mode]);
                     chart1.Series.Remove(chart1.Series[name]);
@@ -298,23 +227,22 @@ namespace EuclideanAlgorithm
                
                 for (int i = 0; i < numOfLoops; i++)
                 {
-                    ulong x = (randomListA[i]+randomListB[i])/2;
+                    ulong x = (this.x + nList[i])/2;
                   
                     long y;
-                    if (alternativeDiagramm)
+                    
                         y = listCPUTimes[i];
-                    else
-                        y = stepList[i];
+                                           
                     chart1.Series[mode].Points.AddXY(Convert.ToInt32(x),y);
                 
                 }
-                if (alternativeDiagramm)
-                {
+               
+               
                     chart1.Series.Add(name);
                     chart1.Series[name].ChartType = SeriesChartType.ErrorBar;
                     chart1.Series[name]["ErrorBarSeries"] = mode + ":Y1";
                     chart1.Series[name]["ErrorBarType"] = "StandardDeviation";
-                }
+               
 
                 clearDiagramm = false;
                 
@@ -460,6 +388,43 @@ namespace EuclideanAlgorithm
         {
             chart1.Series.Clear();
      
+
+        }
+
+        private void GenBtnXN(object sender, EventArgs e)
+        {
+            try
+            {
+                int a = Convert.ToInt32(numericUpDown_a.Value);
+                int b = Convert.ToInt32(numericUpDown_b.Value);
+                numOfLoops = (int)numericUpDown_loops.Value;
+
+                ulong l_a = Convert.ToUInt64(a);
+                ulong l_b = Convert.ToUInt64(b);
+
+                x = genRandomList(a, b, 1)[0];
+                nList = genRandomList(a, b, numOfLoops);
+
+                textBox_Results.AppendText("new x and List<n> has been generated.\n");
+                textBox_Results.AppendText("x = "+x+"\n");
+                String txt = "List<n> = {";
+                foreach(ulong n in nList){
+                    txt += n + ", ";
+                }
+                txt = txt.Substring(0, txt.Length - 2);
+                txt += "}\n";
+                textBox_Results.AppendText(txt);
+                XNLabel.Text = "x = "+x+"\nList<n> count = "+nList.Count;
+                clearDiagramm = true;
+
+            }
+            catch (Exception ex)
+            {
+                textBox_Results.AppendText("\nYour input is wasn't valid!");
+                Console.WriteLine("\n" + ex);
+
+            }
+
 
         }
 

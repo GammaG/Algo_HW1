@@ -161,6 +161,36 @@ namespace EuclideanAlgorithm
         }
 
 
+        //iterative exponentiation
+        private double func1(double x,double n){
+            double res=1;
+            while(n>0){
+                res*=x;
+                n -=1;
+            }
+        return res;
+        }
+
+        //recursive exponentiation
+        private double func2(double x,double n){
+            if (n==1)
+                return x;
+            else
+        return x*func2(x,n-1);
+        }
+
+
+        //faster recusive exponentiation
+        private double func3(double x, double n)
+        {
+            if (n % 2 == 0)
+                func3(x * x, n / 2);
+            else if (n == 1)
+                return x;
+           return x * func3(x, n - 1);
+        }
+
+
         /** LOOPS */
         private void button_loops_Click(object sender, EventArgs e)
         {

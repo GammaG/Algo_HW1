@@ -128,11 +128,11 @@ namespace EuclideanAlgorithm
         //faster recusive exponentiation
         private double func3(double x, double n)
         {
-            if (n % 2 == 0)
-                func3(x * x, n / 2);
-            else if (n == 1)
+            if (n == 1)
                 return x;
-           return x * func3(x, n - 1);
+            if (n % 2 == 0)
+              return  func3(x * x, n / 2);
+            return x * func3(x, n - 1);
         }
 
 
@@ -159,21 +159,21 @@ namespace EuclideanAlgorithm
                     
                     timer.Reset();
                     timer.Start();
-                   
-                    
+
+                    double num;
 
                     switch (comboBox_Method.SelectedIndex)
                     {
                         case 0:
-                            func1(x, nList[i]);
+                          num =  func1(x, nList[i]);
                             mode = "iterative exponentiation";
                             break;
                         case 1:
-                            func2(x, nList[i]);
+                            num = func2(x, nList[i]);
                             mode = "recursive exponentiation";
                             break;
                         case 2:
-                            func3(x, nList[i]);
+                            num = func3(x, nList[i]);
                             mode = "faster recusive exponentiation";
                             break;
                         default:
@@ -182,7 +182,7 @@ namespace EuclideanAlgorithm
 
                     timer.Stop();
                     listCPUTimes.Add(timer.ElapsedTicks);
-
+                    Console.WriteLine(num);
                     int tI = i;
                     tI++; 
                     textBox_Results.AppendText("\r\n Iteration " + tI.ToString()  + ", CPU-time(ticks):" + timer.ElapsedTicks +" for n = "+nList[i]);

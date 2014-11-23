@@ -17,10 +17,12 @@ namespace EuclideanAlgorithm
    
     public partial class Form1 : Form
     {
-         int numOfLoops;
+       
          Boolean clearDiagramm = false;
-         ulong x = 0;
-         List<ulong> nList;
+         ulong x;
+         ulong n;
+         Dictionary<long, int> cpuDictionary = new Dictionary<long,int>();
+         int loops = 0;
 
         public Form1()
         {
@@ -142,19 +144,18 @@ namespace EuclideanAlgorithm
             try
             {
 
-                if (nList == null)
+                if (x == null | n == null)
                 {
-                    textBox_Results.AppendText("Please generate X and List<n> first!\n");
+                    textBox_Results.AppendText("Please set X,N and loops first!\n");
                     return;
                 }
-               
 
-                List<long> listCPUTimes = new List<long>();
-               
+                 
+                cpuDictionary.Clear();
                
                 Stopwatch timer = new Stopwatch();   //other way to initialize: Stopwatch timer = Stopwatch.StartNew();
                 String mode = "";
-                for (int i = 0; i < nList.Count; i++)
+                for (int i = 0; i < loops; i++)
                 {
 
                     timer.Reset();
@@ -165,43 +166,35 @@ namespace EuclideanAlgorithm
                     switch (comboBox_Method.SelectedIndex)
                     {
                         case 0:
-                            num = func1(x, nList[i]);
-                            mode = "iterative exponentiation";
+                            num = func1(x, n);
+                            mode = "iterative exponentiation "+n;
                             break;
                         case 1:
-                            num = func2(x, nList[i]);
-                            mode = "recursive exponentiation";
+                            num = func2(x, n);
+                            mode = "recursive exponentiation "+n;
                             break;
                         case 2:
-                            num = func3(x, nList[i]);
-                            mode = "faster recusive exponentiation";
+                            num = func3(x, n);
+                            mode = "faster recusive exponentiation "+n;
                             break;
                         default:
                             return;
                     }
 
                     timer.Stop();
-                    listCPUTimes.Add(timer.ElapsedTicks);
+                    
                     Console.WriteLine(num);
+                    calcResult(timer.ElapsedTicks);
                     int tI = i;
                     tI++;
-                    textBox_Results.AppendText("\r\n Iteration " + tI.ToString() + ", CPU-time(ticks):" + timer.ElapsedTicks + " for n = " + nList[i]);
+                    textBox_Results.AppendText("\r\n Iteration " + tI.ToString() + ", CPU-time(ticks):" + timer.ElapsedTicks + " for n = " + n);
                 }
 
-                      
-                //Get Mean and SD
-                double meanCPUTicks = getMean(listCPUTimes);
-                double varianceCPUTicks = getVariance(listCPUTimes);
-                double standardDeviationCPUTicks = Math.Sqrt(varianceCPUTicks);
-
-                textBox_Results.AppendText("\r\n Mean CPU-time(ticks):" + meanCPUTicks);
-                
-
-
-               
-
+                Dictionary<long, double> cpuDic = getProb();
+                cpuDic = normalizeDictionary(cpuDic);
+                                
                 chart1.Titles.Clear();
-                chart1.Titles.Add("CPUTime vs (x+n)/2");
+                chart1.Titles.Add("Probability as vs cpuTime");
 
                 if (clearDiagramm)
                 {
@@ -219,36 +212,23 @@ namespace EuclideanAlgorithm
                     chart1.Series.Remove(chart1.Series[mode]);
                 }
 
-        
+               
                 
                 chart1.Series.Add(mode);
                
-                chart1.Series[mode].ChartType = SeriesChartType.Spline;
-
-                if (nList.Count == 1)
-                {
-                    ulong x = (this.x + nList[0]) / 4;
-                    chart1.Series[mode].Points.AddXY(Convert.ToInt32(x), 0);
-                }
-                for (int i = 0; i < nList.Count; i++)
-                {
-                    
-                    ulong x = (this.x + nList[i])/2;                  
-                    long y = listCPUTimes[i];
-                                           
-                    chart1.Series[mode].Points.AddXY(Convert.ToInt32(x),y);
-
-                    
-                }
-                if (nList.Count == 1)
-                {
-                 
-                    ulong x = (this.x + nList[0]);
-                    chart1.Series[mode].Points.AddXY(Convert.ToInt32(x), 0);
-                }
+                chart1.Series[mode].ChartType = SeriesChartType.FastLine;
                
-                                              
+                                
 
+                foreach (long xx in cpuDic.Keys)
+                {
+
+                    chart1.Series[mode].Points.AddXY(xx, cpuDic[xx]);
+
+                    
+                }
+
+                chart1.Series[mode].Sort(PointSortOrder.Ascending, "X");               
                 clearDiagramm = false;
                 
             }
@@ -266,6 +246,17 @@ namespace EuclideanAlgorithm
             }
         }
 
+        private void calcResult(long cpuTime)
+        {
+            if (cpuDictionary.ContainsKey(cpuTime))
+            {
+                cpuDictionary[cpuTime] = cpuDictionary[cpuTime] + 1;
+                return;
+            }
+            cpuDictionary.Add(cpuTime, 1);
+                
+        }
+
         private static List<ulong> generateFactors(List<ulong> a, List<ulong> b){
             List<ulong> list = new List<ulong>();
             for(int i= 0; i < a.Count; i++){
@@ -275,22 +266,61 @@ namespace EuclideanAlgorithm
 
             return list;
         }
-        
 
-        
 
-        private static long getMax(List<long> listCPUTimes)
+        private long getSum()
         {
-            long max = 0;
-            foreach (long t in listCPUTimes)
+            long sum = 0;
+            foreach (long t in cpuDictionary.Keys)
+            {
+                sum += (t*cpuDictionary[t]);
+            }
+            return sum;
+        }
+
+
+
+        private Dictionary<long, double> getProb()
+        {
+            Dictionary<long, double> list = new Dictionary<long, double>();
+            double sum = Convert.ToDouble(getSum());
+
+            foreach (long key in cpuDictionary.Keys)
+            {
+
+                double t = Convert.ToDouble(key);
+                list.Add(key, (key*cpuDictionary[key]) / sum);
+            }
+            return list;
+        }
+
+        private Dictionary<long, double> normalizeDictionary(Dictionary<long, double> dic)
+        {
+            Dictionary<long, double> tempDic = new Dictionary<long, double>();
+            double max = 0;
+            foreach (double t in dic.Values)
             {
                 if (t > max)
                 {
                     max = t;
                 }
             }
-            return max;
+
+            double f = (1 - max)/2;
+            foreach (long l in dic.Keys)
+            {
+                double t = dic[l];
+                tempDic.Add(l, t + f); 
+            }
+
+            return tempDic;
         }
+
+       
+
+
+
+       
 
         private static long getMin(List<long> listCPUTimes)
         {
@@ -354,16 +384,7 @@ namespace EuclideanAlgorithm
             return histo;
         }
 
-        public static List<ulong> genRandomList(int min, int max, int count)
-        {
-            List<ulong> randomList = new List<ulong>();
-            Random random = new Random();
-            for (int i = 0; i < count; ++i)
-            {
-                randomList.Add(Convert.ToUInt64( random.Next(min, max + 1)));
-            }
-            return randomList;
-        }
+       
 
         public static double[] getNormalizedHistogram(double start, double end, List<long> data)
         {
@@ -396,55 +417,21 @@ namespace EuclideanAlgorithm
 
         }
 
-        private void genBtnXN(object sender, EventArgs e)
-        {
-            try
-            {
-                int a = Convert.ToInt32(numericUpDown_a.Value);
-                int b = Convert.ToInt32(numericUpDown_b.Value);
-                numOfLoops = (int)numericUpDown_loops.Value;
-
-                x = genRandomList(a, b, 1)[0];
-                nList = genRandomList(a, b, numOfLoops);
-
-                textBox_Results.AppendText("new x and List<n> has been generated.\n");
-                textBox_Results.AppendText("x = "+x+"\n");
-                String txt = "List<n> = {";
-                foreach(ulong n in nList){
-                    txt += n + ", ";
-                }
-                txt = txt.Substring(0, txt.Length - 2);
-                txt += "}\n";
-                textBox_Results.AppendText(txt);
-                clearDiagramm = true;
-
-            }
-            catch (Exception ex)
-            {
-                textBox_Results.AppendText("\nYour input is wasn't valid!");
-                Console.WriteLine("\n" + ex);
-
-            }
-
-
-        }
-
-
-        private void setXN(object sender, EventArgs e)
+       private void setXN(object sender, EventArgs e)
         {
             try
             {
                 int a = Convert.ToInt32(numericUpDown_x.Value);
                 int b = Convert.ToInt32(numericUpDown_n.Value);
+                loops = Convert.ToInt32(numericUpDown_loops.Value);
                 
                 x = Convert.ToUInt64(a);
-                nList = new List<ulong>();
-                nList.Add(Convert.ToUInt64(b));
+                n = Convert.ToUInt64(b);
 
-                textBox_Results.AppendText("new x and n has been set.\n");
+                textBox_Results.AppendText("x, n and loops has been set.\n");
                 textBox_Results.AppendText("x = " + x + "\n");
-                
-                textBox_Results.AppendText("n = " + nList[0]+"\n");
+                textBox_Results.AppendText("n = " + n +"\n");
+                textBox_Results.AppendText("loops = " + loops + "\n");
                 
 
             }

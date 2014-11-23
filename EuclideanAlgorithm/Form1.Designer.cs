@@ -28,13 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.numericUpDown_a = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown_b = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.textBox_Results = new System.Windows.Forms.TextBox();
             this.button_loops = new System.Windows.Forms.Button();
             this.numericUpDown_loops = new System.Windows.Forms.NumericUpDown();
@@ -43,88 +39,21 @@
             this.label4 = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.clearD = new System.Windows.Forms.Button();
-            this.BtnGenXN = new System.Windows.Forms.Button();
             this.XNLabel = new System.Windows.Forms.Label();
             this.numericUpDown_x = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_n = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.setXNBtn = new System.Windows.Forms.Button();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_a)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_b)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loops)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_x)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_n)).BeginInit();
             this.SuspendLayout();
             // 
-            // numericUpDown_a
-            // 
-            this.numericUpDown_a.Location = new System.Drawing.Point(66, 16);
-            this.numericUpDown_a.Maximum = new decimal(new int[] {
-            1569325056,
-            23283064,
-            0,
-            0});
-            this.numericUpDown_a.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown_a.Name = "numericUpDown_a";
-            this.numericUpDown_a.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown_a.TabIndex = 1;
-            this.numericUpDown_a.Value = new decimal(new int[] {
-            2458,
-            0,
-            0,
-            0});
-            // 
-            // numericUpDown_b
-            // 
-            this.numericUpDown_b.Location = new System.Drawing.Point(66, 42);
-            this.numericUpDown_b.Maximum = new decimal(new int[] {
-            1569325056,
-            23283064,
-            0,
-            0});
-            this.numericUpDown_b.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown_b.Name = "numericUpDown_b";
-            this.numericUpDown_b.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown_b.TabIndex = 2;
-            this.numericUpDown_b.Value = new decimal(new int[] {
-            3544,
-            0,
-            0,
-            0});
-            this.numericUpDown_b.ValueChanged += new System.EventHandler(this.numericUpDown_b_ValueChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(47, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(19, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "a=";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(47, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "b=";
-            // 
             // textBox_Results
             // 
-            this.textBox_Results.Location = new System.Drawing.Point(12, 158);
+            this.textBox_Results.Location = new System.Drawing.Point(12, 129);
             this.textBox_Results.Multiline = true;
             this.textBox_Results.Name = "textBox_Results";
             this.textBox_Results.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -133,9 +62,9 @@
             // 
             // button_loops
             // 
-            this.button_loops.Location = new System.Drawing.Point(48, 129);
+            this.button_loops.Location = new System.Drawing.Point(31, 100);
             this.button_loops.Name = "button_loops";
-            this.button_loops.Size = new System.Drawing.Size(160, 23);
+            this.button_loops.Size = new System.Drawing.Size(135, 23);
             this.button_loops.TabIndex = 7;
             this.button_loops.Text = "Generate Histogram";
             this.button_loops.UseVisualStyleBackColor = true;
@@ -143,7 +72,7 @@
             // 
             // numericUpDown_loops
             // 
-            this.numericUpDown_loops.Location = new System.Drawing.Point(255, 17);
+            this.numericUpDown_loops.Location = new System.Drawing.Point(175, 45);
             this.numericUpDown_loops.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -155,7 +84,7 @@
             0,
             0});
             this.numericUpDown_loops.Name = "numericUpDown_loops";
-            this.numericUpDown_loops.Size = new System.Drawing.Size(95, 20);
+            this.numericUpDown_loops.Size = new System.Drawing.Size(68, 20);
             this.numericUpDown_loops.TabIndex = 8;
             this.numericUpDown_loops.Value = new decimal(new int[] {
             10,
@@ -166,7 +95,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(211, 17);
+            this.label3.Location = new System.Drawing.Point(135, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(38, 13);
             this.label3.TabIndex = 9;
@@ -179,7 +108,7 @@
             "iterative exponentiation",
             "recursive exponentiation",
             "faster recursive exponentiation"});
-            this.comboBox_Method.Location = new System.Drawing.Point(89, 70);
+            this.comboBox_Method.Location = new System.Drawing.Point(65, 12);
             this.comboBox_Method.Name = "comboBox_Method";
             this.comboBox_Method.Size = new System.Drawing.Size(261, 21);
             this.comboBox_Method.TabIndex = 10;
@@ -187,7 +116,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(45, 73);
+            this.label4.Location = new System.Drawing.Point(21, 15);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(46, 13);
             this.label4.TabIndex = 11;
@@ -195,39 +124,29 @@
             // 
             // chart1
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            chartArea1.Name = "Default";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(369, 15);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
+            series1.ChartArea = "Default";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(757, 593);
             this.chart1.TabIndex = 13;
             this.chart1.Text = "chart1";
             // 
             // clearD
             // 
-            this.clearD.Location = new System.Drawing.Point(214, 129);
+            this.clearD.Location = new System.Drawing.Point(175, 100);
             this.clearD.Name = "clearD";
             this.clearD.Size = new System.Drawing.Size(136, 23);
             this.clearD.TabIndex = 15;
             this.clearD.Text = "Clear Diagram";
             this.clearD.UseVisualStyleBackColor = true;
             this.clearD.Click += new System.EventHandler(this.clearD_Click);
-            // 
-            // BtnGenXN
-            // 
-            this.BtnGenXN.Location = new System.Drawing.Point(197, 42);
-            this.BtnGenXN.Name = "BtnGenXN";
-            this.BtnGenXN.Size = new System.Drawing.Size(153, 23);
-            this.BtnGenXN.TabIndex = 16;
-            this.BtnGenXN.Text = "Generate X  and List<N>";
-            this.BtnGenXN.UseVisualStyleBackColor = true;
-            this.BtnGenXN.Click += new System.EventHandler(this.genBtnXN);
             // 
             // XNLabel
             // 
@@ -239,7 +158,7 @@
             // 
             // numericUpDown_x
             // 
-            this.numericUpDown_x.Location = new System.Drawing.Point(65, 100);
+            this.numericUpDown_x.Location = new System.Drawing.Point(48, 42);
             this.numericUpDown_x.Name = "numericUpDown_x";
             this.numericUpDown_x.Size = new System.Drawing.Size(69, 20);
             this.numericUpDown_x.TabIndex = 18;
@@ -251,7 +170,7 @@
             // 
             // numericUpDown_n
             // 
-            this.numericUpDown_n.Location = new System.Drawing.Point(175, 101);
+            this.numericUpDown_n.Location = new System.Drawing.Point(49, 68);
             this.numericUpDown_n.Name = "numericUpDown_n";
             this.numericUpDown_n.Size = new System.Drawing.Size(68, 20);
             this.numericUpDown_n.TabIndex = 19;
@@ -264,7 +183,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(45, 103);
+            this.label5.Location = new System.Drawing.Point(28, 45);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(21, 13);
             this.label5.TabIndex = 20;
@@ -273,7 +192,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(150, 103);
+            this.label6.Location = new System.Drawing.Point(28, 70);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(19, 13);
             this.label6.TabIndex = 21;
@@ -281,11 +200,11 @@
             // 
             // setXNBtn
             // 
-            this.setXNBtn.Location = new System.Drawing.Point(249, 98);
+            this.setXNBtn.Location = new System.Drawing.Point(175, 71);
             this.setXNBtn.Name = "setXNBtn";
             this.setXNBtn.Size = new System.Drawing.Size(101, 23);
             this.setXNBtn.TabIndex = 22;
-            this.setXNBtn.Text = "set X and N value";
+            this.setXNBtn.Text = "set values";
             this.setXNBtn.UseVisualStyleBackColor = true;
             this.setXNBtn.Click += new System.EventHandler(this.setXN);
             // 
@@ -300,7 +219,6 @@
             this.Controls.Add(this.numericUpDown_n);
             this.Controls.Add(this.numericUpDown_x);
             this.Controls.Add(this.XNLabel);
-            this.Controls.Add(this.BtnGenXN);
             this.Controls.Add(this.clearD);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.label4);
@@ -309,14 +227,8 @@
             this.Controls.Add(this.numericUpDown_loops);
             this.Controls.Add(this.button_loops);
             this.Controls.Add(this.textBox_Results);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown_b);
-            this.Controls.Add(this.numericUpDown_a);
             this.Name = "Form1";
             this.Text = "HW1";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_a)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_b)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loops)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_x)).EndInit();
@@ -328,10 +240,6 @@
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown numericUpDown_a;
-        private System.Windows.Forms.NumericUpDown numericUpDown_b;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox_Results;
         private System.Windows.Forms.Button button_loops;
         private System.Windows.Forms.NumericUpDown numericUpDown_loops;
@@ -340,14 +248,12 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button clearD;
-        private System.Windows.Forms.Button BtnGenXN;
         private System.Windows.Forms.Label XNLabel;
         private System.Windows.Forms.NumericUpDown numericUpDown_x;
         private System.Windows.Forms.NumericUpDown numericUpDown_n;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button setXNBtn;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

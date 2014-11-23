@@ -224,20 +224,30 @@ namespace EuclideanAlgorithm
                 chart1.Series.Add(mode);
                
                 chart1.Series[mode].ChartType = SeriesChartType.Spline;
-               
+
+                if (nList.Count == 1)
+                {
+                    ulong x = (this.x + nList[0]) / 4;
+                    chart1.Series[mode].Points.AddXY(Convert.ToInt32(x), 0);
+                }
                 for (int i = 0; i < nList.Count; i++)
                 {
-                    ulong x = (this.x + nList[i])/2;                  
-                    long y;
                     
-                        y = listCPUTimes[i];
+                    ulong x = (this.x + nList[i])/2;                  
+                    long y = listCPUTimes[i];
                                            
                     chart1.Series[mode].Points.AddXY(Convert.ToInt32(x),y);
-                
+
+                    
+                }
+                if (nList.Count == 1)
+                {
+                 
+                    ulong x = (this.x + nList[0]);
+                    chart1.Series[mode].Points.AddXY(Convert.ToInt32(x), 0);
                 }
                
-               
-                                 
+                                              
 
                 clearDiagramm = false;
                 

@@ -25,7 +25,7 @@ namespace EuclideanAlgorithm
         public Form1()
         {
             InitializeComponent();
-
+            chart1.Series.Clear();
             comboBox_Method.SelectedIndex = 0;  //Sub
          
         }
@@ -154,9 +154,9 @@ namespace EuclideanAlgorithm
                
                 Stopwatch timer = new Stopwatch();   //other way to initialize: Stopwatch timer = Stopwatch.StartNew();
                 String mode = "";
-                for (int i = 0; i < numOfLoops; i++)
+                for (int i = 0; i < nList.Count; i++)
                 {
-                    
+
                     timer.Reset();
                     timer.Start();
 
@@ -165,7 +165,7 @@ namespace EuclideanAlgorithm
                     switch (comboBox_Method.SelectedIndex)
                     {
                         case 0:
-                          num =  func1(x, nList[i]);
+                            num = func1(x, nList[i]);
                             mode = "iterative exponentiation";
                             break;
                         case 1:
@@ -184,8 +184,8 @@ namespace EuclideanAlgorithm
                     listCPUTimes.Add(timer.ElapsedTicks);
                     Console.WriteLine(num);
                     int tI = i;
-                    tI++; 
-                    textBox_Results.AppendText("\r\n Iteration " + tI.ToString()  + ", CPU-time(ticks):" + timer.ElapsedTicks +" for n = "+nList[i]);
+                    tI++;
+                    textBox_Results.AppendText("\r\n Iteration " + tI.ToString() + ", CPU-time(ticks):" + timer.ElapsedTicks + " for n = " + nList[i]);
                 }
 
                       
@@ -195,11 +195,10 @@ namespace EuclideanAlgorithm
                 double standardDeviationCPUTicks = Math.Sqrt(varianceCPUTicks);
 
                 textBox_Results.AppendText("\r\n Mean CPU-time(ticks):" + meanCPUTicks);
-                textBox_Results.AppendText("\r\n Standard Deviation CPU-time(ticks):" + standardDeviationCPUTicks);
+                
 
 
-                //add data to chart
-                String name = "StandardDeviation for\n"+mode;
+               
 
                 chart1.Titles.Clear();
                 chart1.Titles.Add("CPUTime vs (x+n)/2");
@@ -213,7 +212,7 @@ namespace EuclideanAlgorithm
                 if (!chart1.Series.IsUniqueName(mode))
                 {
                     chart1.Series.Remove(chart1.Series[mode]);
-                    chart1.Series.Remove(chart1.Series[name]);
+                  
                 }
                 else if (!chart1.Series.IsUniqueName(mode))
                 {
@@ -221,14 +220,14 @@ namespace EuclideanAlgorithm
                 }
 
         
+                
                 chart1.Series.Add(mode);
                
-                chart1.Series[mode].ChartType = SeriesChartType.Point;
+                chart1.Series[mode].ChartType = SeriesChartType.Spline;
                
-                for (int i = 0; i < numOfLoops; i++)
+                for (int i = 0; i < nList.Count; i++)
                 {
-                    ulong x = (this.x + nList[i])/2;
-                  
+                    ulong x = (this.x + nList[i])/2;                  
                     long y;
                     
                         y = listCPUTimes[i];
@@ -238,11 +237,7 @@ namespace EuclideanAlgorithm
                 }
                
                
-                    chart1.Series.Add(name);
-                    chart1.Series[name].ChartType = SeriesChartType.ErrorBar;
-                    chart1.Series[name]["ErrorBarSeries"] = mode + ":Y1";
-                    chart1.Series[name]["ErrorBarType"] = "StandardDeviation";
-               
+                                 
 
                 clearDiagramm = false;
                 
@@ -391,16 +386,13 @@ namespace EuclideanAlgorithm
 
         }
 
-        private void GenBtnXN(object sender, EventArgs e)
+        private void genBtnXN(object sender, EventArgs e)
         {
             try
             {
                 int a = Convert.ToInt32(numericUpDown_a.Value);
                 int b = Convert.ToInt32(numericUpDown_b.Value);
                 numOfLoops = (int)numericUpDown_loops.Value;
-
-                ulong l_a = Convert.ToUInt64(a);
-                ulong l_b = Convert.ToUInt64(b);
 
                 x = genRandomList(a, b, 1)[0];
                 nList = genRandomList(a, b, numOfLoops);
@@ -414,7 +406,6 @@ namespace EuclideanAlgorithm
                 txt = txt.Substring(0, txt.Length - 2);
                 txt += "}\n";
                 textBox_Results.AppendText(txt);
-                XNLabel.Text = "x = "+x+"\nList<n> count = "+nList.Count;
                 clearDiagramm = true;
 
             }
@@ -425,6 +416,34 @@ namespace EuclideanAlgorithm
 
             }
 
+
+        }
+
+
+        private void setXN(object sender, EventArgs e)
+        {
+            try
+            {
+                int a = Convert.ToInt32(numericUpDown_x.Value);
+                int b = Convert.ToInt32(numericUpDown_n.Value);
+                
+                x = Convert.ToUInt64(a);
+                nList = new List<ulong>();
+                nList.Add(Convert.ToUInt64(b));
+
+                textBox_Results.AppendText("new x and n has been set.\n");
+                textBox_Results.AppendText("x = " + x + "\n");
+                
+                textBox_Results.AppendText("n = " + nList[0]+"\n");
+                
+
+            }
+            catch (Exception ex)
+            {
+                textBox_Results.AppendText("\nYour input is wasn't valid!");
+                Console.WriteLine("\n" + ex);
+
+            }
 
         }
 

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.numericUpDown_a = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_b = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,10 +45,18 @@
             this.clearD = new System.Windows.Forms.Button();
             this.BtnGenXN = new System.Windows.Forms.Button();
             this.XNLabel = new System.Windows.Forms.Label();
+            this.numericUpDown_x = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_n = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.setXNBtn = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_a)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_b)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loops)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_x)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_n)).BeginInit();
             this.SuspendLayout();
             // 
             // numericUpDown_a
@@ -125,9 +133,9 @@
             // 
             // button_loops
             // 
-            this.button_loops.Location = new System.Drawing.Point(19, 95);
+            this.button_loops.Location = new System.Drawing.Point(48, 129);
             this.button_loops.Name = "button_loops";
-            this.button_loops.Size = new System.Drawing.Size(128, 23);
+            this.button_loops.Size = new System.Drawing.Size(160, 23);
             this.button_loops.TabIndex = 7;
             this.button_loops.Text = "Generate Histogram";
             this.button_loops.UseVisualStyleBackColor = true;
@@ -171,15 +179,15 @@
             "iterative exponentiation",
             "recursive exponentiation",
             "faster recursive exponentiation"});
-            this.comboBox_Method.Location = new System.Drawing.Point(65, 68);
+            this.comboBox_Method.Location = new System.Drawing.Point(89, 70);
             this.comboBox_Method.Name = "comboBox_Method";
-            this.comboBox_Method.Size = new System.Drawing.Size(250, 21);
+            this.comboBox_Method.Size = new System.Drawing.Size(261, 21);
             this.comboBox_Method.TabIndex = 10;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 71);
+            this.label4.Location = new System.Drawing.Point(45, 73);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(46, 13);
             this.label4.TabIndex = 11;
@@ -187,25 +195,25 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(369, 15);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(757, 593);
             this.chart1.TabIndex = 13;
             this.chart1.Text = "chart1";
             // 
             // clearD
             // 
-            this.clearD.Location = new System.Drawing.Point(19, 129);
+            this.clearD.Location = new System.Drawing.Point(214, 129);
             this.clearD.Name = "clearD";
-            this.clearD.Size = new System.Drawing.Size(91, 23);
+            this.clearD.Size = new System.Drawing.Size(136, 23);
             this.clearD.TabIndex = 15;
             this.clearD.Text = "Clear Diagram";
             this.clearD.UseVisualStyleBackColor = true;
@@ -213,13 +221,13 @@
             // 
             // BtnGenXN
             // 
-            this.BtnGenXN.Location = new System.Drawing.Point(162, 95);
+            this.BtnGenXN.Location = new System.Drawing.Point(197, 42);
             this.BtnGenXN.Name = "BtnGenXN";
             this.BtnGenXN.Size = new System.Drawing.Size(153, 23);
             this.BtnGenXN.TabIndex = 16;
             this.BtnGenXN.Text = "Generate X  and List<N>";
             this.BtnGenXN.UseVisualStyleBackColor = true;
-            this.BtnGenXN.Click += new System.EventHandler(this.GenBtnXN);
+            this.BtnGenXN.Click += new System.EventHandler(this.genBtnXN);
             // 
             // XNLabel
             // 
@@ -229,11 +237,68 @@
             this.XNLabel.Size = new System.Drawing.Size(0, 13);
             this.XNLabel.TabIndex = 17;
             // 
+            // numericUpDown_x
+            // 
+            this.numericUpDown_x.Location = new System.Drawing.Point(65, 100);
+            this.numericUpDown_x.Name = "numericUpDown_x";
+            this.numericUpDown_x.Size = new System.Drawing.Size(69, 20);
+            this.numericUpDown_x.TabIndex = 18;
+            this.numericUpDown_x.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown_n
+            // 
+            this.numericUpDown_n.Location = new System.Drawing.Point(175, 101);
+            this.numericUpDown_n.Name = "numericUpDown_n";
+            this.numericUpDown_n.Size = new System.Drawing.Size(68, 20);
+            this.numericUpDown_n.TabIndex = 19;
+            this.numericUpDown_n.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(45, 103);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(21, 13);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "x= ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(150, 103);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(19, 13);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "n=";
+            // 
+            // setXNBtn
+            // 
+            this.setXNBtn.Location = new System.Drawing.Point(249, 98);
+            this.setXNBtn.Name = "setXNBtn";
+            this.setXNBtn.Size = new System.Drawing.Size(101, 23);
+            this.setXNBtn.TabIndex = 22;
+            this.setXNBtn.Text = "set X and N value";
+            this.setXNBtn.UseVisualStyleBackColor = true;
+            this.setXNBtn.Click += new System.EventHandler(this.setXN);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1138, 645);
+            this.Controls.Add(this.setXNBtn);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.numericUpDown_n);
+            this.Controls.Add(this.numericUpDown_x);
             this.Controls.Add(this.XNLabel);
             this.Controls.Add(this.BtnGenXN);
             this.Controls.Add(this.clearD);
@@ -254,6 +319,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_b)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loops)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_x)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_n)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,6 +342,12 @@
         private System.Windows.Forms.Button clearD;
         private System.Windows.Forms.Button BtnGenXN;
         private System.Windows.Forms.Label XNLabel;
+        private System.Windows.Forms.NumericUpDown numericUpDown_x;
+        private System.Windows.Forms.NumericUpDown numericUpDown_n;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button setXNBtn;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

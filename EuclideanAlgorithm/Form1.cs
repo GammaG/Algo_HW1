@@ -167,15 +167,15 @@ namespace EuclideanAlgorithm
                     {
                         case 0:
                             num = func1(x, n);
-                            mode = "iterative exponentiation "+n;
+                            mode = "iterative exponentiation N = "+n;
                             break;
                         case 1:
                             num = func2(x, n);
-                            mode = "recursive exponentiation "+n;
+                            mode = "recursive exponentiation N = "+n;
                             break;
                         case 2:
                             num = func3(x, n);
-                            mode = "faster recusive exponentiation "+n;
+                            mode = "faster recusive exponentiation N = "+n;
                             break;
                         default:
                             return;
@@ -191,10 +191,10 @@ namespace EuclideanAlgorithm
                 }
 
                 Dictionary<long, double> cpuDic = getProb();
-                cpuDic = normalizeDictionary(cpuDic);
+                //cpuDic = normalizeDictionary(cpuDic);
                                 
                 chart1.Titles.Clear();
-                chart1.Titles.Add("Probability as vs cpuTime");
+                chart1.Titles.Add("Probability in % as vs cpuTime");
 
                 if (clearDiagramm)
                 {
@@ -207,18 +207,15 @@ namespace EuclideanAlgorithm
                     chart1.Series.Remove(chart1.Series[mode]);
                   
                 }
-                else if (!chart1.Series.IsUniqueName(mode))
-                {
-                    chart1.Series.Remove(chart1.Series[mode]);
-                }
-
                
                 
                 chart1.Series.Add(mode);
                
-                chart1.Series[mode].ChartType = SeriesChartType.FastLine;
-               
-                                
+                //chart1.Series[mode].ChartType = SeriesChartType.FastLine;
+                chart1.Series[mode].ChartType = SeriesChartType.Column;
+                chart1.ChartAreas[0].AxisX.Title = "cpuTime in ms";
+                chart1.ChartAreas[0].AxisY.Title = "Probability in %";
+
 
                 foreach (long xx in cpuDic.Keys)
                 {
@@ -283,13 +280,14 @@ namespace EuclideanAlgorithm
         private Dictionary<long, double> getProb()
         {
             Dictionary<long, double> list = new Dictionary<long, double>();
-            double sum = Convert.ToDouble(getSum());
+//            double sum = Convert.ToDouble(getSum());
+            double loop = Convert.ToDouble(loops);
 
             foreach (long key in cpuDictionary.Keys)
             {
 
                 double t = Convert.ToDouble(key);
-                list.Add(key, (key*cpuDictionary[key]) / sum);
+                list.Add(key, ((cpuDictionary[key]) / loop)*100);
             }
             return list;
         }
@@ -306,7 +304,7 @@ namespace EuclideanAlgorithm
                 }
             }
 
-            double f = (1 - max)/2;
+            double f = 1 - max;
             foreach (long l in dic.Keys)
             {
                 double t = dic[l];

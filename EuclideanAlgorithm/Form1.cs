@@ -18,11 +18,13 @@ namespace EuclideanAlgorithm
     public partial class Form1 : Form
     {
        
-         Boolean clearDiagramm = false;
-         ulong x;
-         ulong n;
-         Dictionary<long, int> cpuDictionary = new Dictionary<long,int>();
-         int loops = 0;
+         private Boolean clearDiagramm = false;
+         private ulong x;
+         private ulong n;
+         private Dictionary<long, int> cpuDictionary = new Dictionary<long, int>();
+         private int loops = 0;
+         private String modeFirst = "";
+     
 
         public Form1()
         {
@@ -185,6 +187,9 @@ namespace EuclideanAlgorithm
                     
                     Console.WriteLine(num);
                     calcResult(timer.ElapsedTicks);
+                    
+
+
                     int tI = i;
                     tI++;
                     textBox_Results.AppendText("\r\n Iteration " + tI.ToString() + ", CPU-time(ticks):" + timer.ElapsedTicks + " for n = " + n);
@@ -194,7 +199,7 @@ namespace EuclideanAlgorithm
                 //cpuDic = normalizeDictionary(cpuDic);
                                 
                 chart1.Titles.Clear();
-                chart1.Titles.Add("Probability in % as vs cpuTime");
+                chart1.Titles.Add("Probability vs cpuTime");
 
                 if (clearDiagramm)
                 {
@@ -211,10 +216,10 @@ namespace EuclideanAlgorithm
                 
                 chart1.Series.Add(mode);
                
-                //chart1.Series[mode].ChartType = SeriesChartType.FastLine;
+                //chart1.Series[mode].ChartType = SeriesChartType.Spline;
                 chart1.Series[mode].ChartType = SeriesChartType.Column;
                 chart1.ChartAreas[0].AxisX.Title = "cpuTime in ms";
-                chart1.ChartAreas[0].AxisY.Title = "Probability in %";
+                chart1.ChartAreas[0].AxisY.Title = "Probability";
 
 
                 foreach (long xx in cpuDic.Keys)
@@ -227,20 +232,69 @@ namespace EuclideanAlgorithm
 
                 chart1.Series[mode].Sort(PointSortOrder.Ascending, "X");               
                 clearDiagramm = false;
+
+                double mean = chart1.DataManipulator.Statistics.Mean(mode);
+                double variance = chart1.DataManipulator.Statistics.Variance(mode, false);
+
+
+                textBox_Results.AppendText("\r\nMean: " + mean);
+                textBox_Results.AppendText("\r\nVariance: " + variance);
+                tryTAndFTest(mode);
+
                 
             }
             catch (ArgumentOutOfRangeException ex)
             {
-                textBox_Results.AppendText("\n"+ex.Message);
+                textBox_Results.AppendText("\r\n" + ex.Message);
                 
             }
 
             catch (Exception ex)
             {
-                textBox_Results.AppendText("\nYour input is wasn't valid!");
-                Console.WriteLine("\n"+ex);
+                textBox_Results.AppendText("\r\nYour input is wasn't valid!");
+                Console.WriteLine("\r\n" + ex);
                 
             }
+        }
+
+
+       
+
+        private void tryTAndFTest(String mode)
+        {
+            if (modeFirst.Equals("")| modeFirst.Equals(mode))
+            {
+                modeFirst = mode;
+                return;
+            }
+            
+
+            int countOld = chart1.Series[modeFirst].Points.Count;
+            int count = chart1.Series[mode].Points.Count;
+
+
+            //Adding 0 values if one of the chats has less values .. for tests need to have equal amount for the F and T Test. 
+            if (countOld < count) {
+                for (int i = 0; i < count - countOld; i++)
+                {
+                   chart1.Series[modeFirst].Points.AddXY(0, 0);
+                }
+
+            }
+            else if (count < countOld)
+            {
+                for (int i = 0; i < countOld - count; i++)
+                {
+                    chart1.Series[mode].Points.AddXY(0, 0);
+                }
+            }
+
+
+            TTestResult resultTTest = chart1.DataManipulator.Statistics.TTestPaired(0.2, 0.05, modeFirst, mode);
+            textBox_Results.AppendText("\r\nTTest for " + modeFirst +"\r\nand "+mode+"\r\nis "+ resultTTest.TValue);
+            FTestResult resultFTest = chart1.DataManipulator.Statistics.FTest(0.05, modeFirst, mode);
+            textBox_Results.AppendText("\r\nFTest for " + modeFirst + "\r\nand " + mode + "\r\nis " + resultTTest.TValue);
+            modeFirst = "";
         }
 
         private void calcResult(long cpuTime)
@@ -287,7 +341,7 @@ namespace EuclideanAlgorithm
             {
 
                 double t = Convert.ToDouble(key);
-                list.Add(key, ((cpuDictionary[key]) / loop)*100);
+                list.Add(key, cpuDictionary[key] / loop);
             }
             return list;
         }
@@ -314,7 +368,6 @@ namespace EuclideanAlgorithm
             return tempDic;
         }
 
-       
 
 
 

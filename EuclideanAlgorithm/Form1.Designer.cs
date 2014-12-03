@@ -45,6 +45,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.setXNBtn = new System.Windows.Forms.Button();
+            this.clearBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loops)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_x)).BeginInit();
@@ -208,11 +209,22 @@
             this.setXNBtn.UseVisualStyleBackColor = true;
             this.setXNBtn.Click += new System.EventHandler(this.setXN);
             // 
+            // clearBtn
+            // 
+            this.clearBtn.Location = new System.Drawing.Point(12, 585);
+            this.clearBtn.Name = "clearBtn";
+            this.clearBtn.Size = new System.Drawing.Size(75, 23);
+            this.clearBtn.TabIndex = 23;
+            this.clearBtn.Text = "Clear";
+            this.clearBtn.UseVisualStyleBackColor = true;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1138, 645);
+            this.Controls.Add(this.clearBtn);
             this.Controls.Add(this.setXNBtn);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -254,6 +266,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button setXNBtn;
+        private System.Windows.Forms.Button clearBtn;
     }
 }
 

@@ -293,7 +293,7 @@ namespace EuclideanAlgorithm
             TTestResult resultTTest = chart1.DataManipulator.Statistics.TTestPaired(0.2, 0.05, modeFirst, mode);
             textBox_Results.AppendText("\r\nTTest for " + modeFirst +"\r\nand "+mode+"\r\nis "+ resultTTest.TValue);
             FTestResult resultFTest = chart1.DataManipulator.Statistics.FTest(0.05, modeFirst, mode);
-            textBox_Results.AppendText("\r\nFTest for " + modeFirst + "\r\nand " + mode + "\r\nis " + resultTTest.TValue);
+            textBox_Results.AppendText("\r\nFTest for " + modeFirst + "\r\nand " + mode + "\r\nis " + resultFTest.FValue);
             modeFirst = "";
         }
 
@@ -464,6 +464,7 @@ namespace EuclideanAlgorithm
         private void clearD_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear();
+            chart1.Titles.Clear();
      
 
         }
@@ -494,6 +495,11 @@ namespace EuclideanAlgorithm
             }
 
         }
+
+       private void clearBtn_Click(object sender, EventArgs e)
+       {
+           textBox_Results.Clear();
+       }
 
      }
 }

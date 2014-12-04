@@ -273,18 +273,15 @@ namespace EuclideanAlgorithm
             int count = chart1.Series[mode].Points.Count;
 
 
-            //Adding 0 values if one of the chats has less values .. for tests need to have equal amount for the F and T Test. 
+            //Adding 0 values if one of the charts has less points. For the tests it is needed to have equal amount of points for the F and T Test. 
             if (countOld < count) {
-                for (int i = 0; i < count - countOld; i++)
-                {
+                for (int i = 0; i < count - countOld; i++){
                    chart1.Series[modeFirst].Points.AddXY(0, 0);
                 }
 
             }
-            else if (count < countOld)
-            {
-                for (int i = 0; i < countOld - count; i++)
-                {
+            else if (count < countOld) {
+                for (int i = 0; i < countOld - count; i++){
                     chart1.Series[mode].Points.AddXY(0, 0);
                 }
             }

@@ -146,7 +146,7 @@ namespace EuclideanAlgorithm
             try
             {
 
-                if (x < 0 | n < 0 | x == 0 | n == 0 | loops == 0 | loops < -1)
+                if (x < 0 | n < 0 | x == 0 | n == 0 | loops == 0 | loops < 0)
                 {
                     textBox_Results.AppendText("Your values aren't valid.\r\n");
                     textBox_Results.AppendText("Please set X,N and loops first!\r\n");

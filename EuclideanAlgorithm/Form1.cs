@@ -19,8 +19,8 @@ namespace EuclideanAlgorithm
     {
        
          private Boolean clearDiagramm = false;
-         private ulong x;
-         private ulong n;
+         private ulong x = 0;
+         private ulong n = 0;
          private Dictionary<long, int> cpuDictionary = new Dictionary<long, int>();
          private int loops = 0;
          private String modeFirst = "";
@@ -146,9 +146,10 @@ namespace EuclideanAlgorithm
             try
             {
 
-                if (x == null | n == null)
+                if (x < 0 | n < 0 | x == 0 | n == 0 | loops == 0 | loops < -1)
                 {
-                    textBox_Results.AppendText("Please set X,N and loops first!\n");
+                    textBox_Results.AppendText("Your values aren't valid.\r\n");
+                    textBox_Results.AppendText("Please set X,N and loops first!\r\n");
                     return;
                 }
 

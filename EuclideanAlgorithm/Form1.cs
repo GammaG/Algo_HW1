@@ -129,7 +129,7 @@ namespace EuclideanAlgorithm
         }
 
 
-        //faster recusive exponentiation
+        //faster recursive exponentiation
         private double func3(double x, double n)
         {
             if (n == 1)
@@ -463,6 +463,7 @@ namespace EuclideanAlgorithm
         {
             chart1.Series.Clear();
             chart1.Titles.Clear();
+            modeFirst = "";
      
 
         }

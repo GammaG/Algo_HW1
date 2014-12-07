@@ -24,7 +24,8 @@ namespace EuclideanAlgorithm
          private Dictionary<long, int> cpuDictionary = new Dictionary<long, int>();
          private int loops = 0;
          private String modeFirst = "";
-     
+         private List<long> alternativList = new List<long>();
+         private Chart dummyChart = new Chart();
 
         public Form1()
         {
@@ -145,6 +146,7 @@ namespace EuclideanAlgorithm
         {
             try
             {
+                
 
                 if (x < 0 | n < 0 | x == 0 | n == 0 | loops == 0 | loops < 0)
                 {
@@ -205,37 +207,42 @@ namespace EuclideanAlgorithm
                 if (clearDiagramm)
                 {
                     chart1.Series.Clear();
+                    dummyChart.Series.Clear();
                 }
 
 
                 if (!chart1.Series.IsUniqueName(mode))
                 {
                     chart1.Series.Remove(chart1.Series[mode]);
+                    dummyChart.Series.Remove(chart1.Series[mode]);
                   
                 }
                
                 
                 chart1.Series.Add(mode);
+                dummyChart.Series.Add(mode);
                
                 //chart1.Series[mode].ChartType = SeriesChartType.Spline;
                 chart1.Series[mode].ChartType = SeriesChartType.Column;
                 chart1.ChartAreas[0].AxisX.Title = "cpuTime in ms";
                 chart1.ChartAreas[0].AxisY.Title = "Probability";
 
-
+                
                 foreach (long xx in cpuDic.Keys)
                 {
-
                     chart1.Series[mode].Points.AddXY(xx, cpuDic[xx]);
-
-                    
+                                       
                 }
-
-                chart1.Series[mode].Sort(PointSortOrder.Ascending, "X");               
+                for (int i = 0; i < loops; ++i)
+                {
+                    dummyChart.Series[mode].Points.AddXY(i, alternativList[i]);
+                }
+                alternativList.Clear();
+                    chart1.Series[mode].Sort(PointSortOrder.Ascending, "X");               
                 clearDiagramm = false;
 
-                double mean = chart1.DataManipulator.Statistics.Mean(mode);
-                double variance = chart1.DataManipulator.Statistics.Variance(mode, false);
+                double mean = dummyChart.DataManipulator.Statistics.Mean(mode);
+                double variance = dummyChart.DataManipulator.Statistics.Variance(mode, false);
 
 
                 textBox_Results.AppendText("\r\nMean: " + mean);
@@ -268,38 +275,30 @@ namespace EuclideanAlgorithm
                 modeFirst = mode;
                 return;
             }
-            
-
-            int countOld = chart1.Series[modeFirst].Points.Count;
-            int count = chart1.Series[mode].Points.Count;
 
 
-            //Adding 0 values if one of the charts has less points. For the tests it is needed to have equal amount of points for the F and T Test. 
-            if (countOld < count) {
-                for (int i = 0; i < count - countOld; i++){
-                   chart1.Series[modeFirst].Points.AddXY(0, 0);
-                }
 
-            }
-            else if (count < countOld) {
-                for (int i = 0; i < countOld - count; i++){
-                    chart1.Series[mode].Points.AddXY(0, 0);
-                }
-            }
-
-
-            TTestResult resultTTest = chart1.DataManipulator.Statistics.TTestPaired(0.2, 0.05, modeFirst, mode);
+            TTestResult resultTTest = dummyChart.DataManipulator.Statistics.TTestPaired(0.3, 0.05, modeFirst, mode);
+        
             textBox_Results.AppendText("\r\nTTest for " + modeFirst +"\r\nand "+mode+"\r\nis "+ resultTTest.TValue);
-            FTestResult resultFTest = chart1.DataManipulator.Statistics.FTest(0.05, modeFirst, mode);
+            textBox_Results.AppendText("\r\nProbability: " + resultTTest.ProbabilityTOneTail);
+            textBox_Results.AppendText("\r\nCritical TValue: " + resultTTest.TCriticalValueOneTail);
+
+            FTestResult resultFTest = dummyChart.DataManipulator.Statistics.FTest(0.05, modeFirst, mode);
             textBox_Results.AppendText("\r\nFTest for " + modeFirst + "\r\nand " + mode + "\r\nis " + resultFTest.FValue);
+            textBox_Results.AppendText("\r\nProbability: " + resultFTest.ProbabilityFOneTail);
+            textBox_Results.AppendText("\r\nCritical FValue: " + resultFTest.FCriticalValueOneTail);
+                   
             modeFirst = "";
         }
 
         private void calcResult(long cpuTime)
         {
+            alternativList.Add(cpuTime);
             if (cpuDictionary.ContainsKey(cpuTime))
             {
                 cpuDictionary[cpuTime] = cpuDictionary[cpuTime] + 1;
+               
                 return;
             }
             cpuDictionary.Add(cpuTime, 1);
@@ -461,6 +460,7 @@ namespace EuclideanAlgorithm
 
         private void clearD_Click(object sender, EventArgs e)
         {
+            dummyChart.Series.Clear();
             chart1.Series.Clear();
             chart1.Titles.Clear();
             modeFirst = "";
@@ -499,6 +499,10 @@ namespace EuclideanAlgorithm
        {
            textBox_Results.Clear();
        }
+
+      
+      
+
 
      }
 }

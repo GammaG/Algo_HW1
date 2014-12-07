@@ -27,6 +27,8 @@ namespace EuclideanAlgorithm
          private List<long> alternativList = new List<long>();
          private Chart dummyChart = new Chart();
 
+         private Dictionary<ulong, long> nListDic = new Dictionary<ulong, long>();
+     
         public Form1()
         {
             InitializeComponent();
@@ -214,10 +216,14 @@ namespace EuclideanAlgorithm
                 if (!chart1.Series.IsUniqueName(mode))
                 {
                     chart1.Series.Remove(chart1.Series[mode]);
-                    dummyChart.Series.Remove(chart1.Series[mode]);
+                    
                   
                 }
-               
+                if (!dummyChart.Series.IsUniqueName(mode))
+                {
+                    dummyChart.Series.Remove(chart1.Series[mode]);
+
+                }
                 
                 chart1.Series.Add(mode);
                 dummyChart.Series.Add(mode);
@@ -303,6 +309,18 @@ namespace EuclideanAlgorithm
             }
             cpuDictionary.Add(cpuTime, 1);
                 
+        }
+
+        private void addResultForNValue(ulong n, long cpuTime)
+        {
+            
+            if (nListDic.ContainsKey(n))
+            {
+                nListDic[n] = cpuTime;
+                return;
+            }
+            nListDic.Add(n,cpuTime);
+            
         }
 
         private static List<ulong> generateFactors(List<ulong> a, List<ulong> b){
@@ -395,11 +413,11 @@ namespace EuclideanAlgorithm
 
         }
 
-        public static double getMean(List<long> resultset)
+        private long getMean(List<long> resultset)
         {
-            ulong number = Convert.ToUInt64(resultset.Count);
-            ulong x = 0;
-            foreach (ulong time in resultset)
+            long number = Convert.ToUInt32(resultset.Count);
+            long x = 0;
+            foreach (long time in resultset)
             {
                 x += time;
             }
@@ -463,6 +481,7 @@ namespace EuclideanAlgorithm
             dummyChart.Series.Clear();
             chart1.Series.Clear();
             chart1.Titles.Clear();
+            nListDic.Clear();
             modeFirst = "";
      
 
@@ -498,6 +517,107 @@ namespace EuclideanAlgorithm
        private void clearBtn_Click(object sender, EventArgs e)
        {
            textBox_Results.Clear();
+       }
+
+       private void addMeanBtn_Click(object sender, EventArgs e)
+       {
+           try
+           {
+
+
+               if (x < 0 | n < 0 | x == 0 | n == 0 | loops == 0 | loops < 0)
+               {
+                   textBox_Results.AppendText("Your values aren't valid.\r\n");
+                   textBox_Results.AppendText("Please set X,N and loops first!\r\n");
+                   return;
+               }
+
+
+              
+               Stopwatch timer = new Stopwatch();   //other way to initialize: Stopwatch timer = Stopwatch.StartNew();
+               String mode = "";
+               for (int i = 0; i < loops; i++)
+               {
+
+                   timer.Reset();
+                   timer.Start();
+
+                   double num;
+
+                   switch (comboBox_Method.SelectedIndex)
+                   {
+                       case 0:
+                           num = func1(x, n);
+                           mode = "iterative exponentiation";
+                           break;
+                       case 1:
+                           num = func2(x, n);
+                           mode = "recursive exponentiation";
+                           break;
+                       case 2:
+                           num = func3(x, n);
+                           mode = "faster recusive exponentiation";
+                           break;
+                       default:
+                           return;
+                   }
+
+                   timer.Stop();
+
+                   Console.WriteLine(num);
+                   //calcResult(timer.ElapsedTicks);
+                   alternativList.Add(timer.ElapsedTicks);
+
+                   int tI = i;
+                   tI++;
+                   textBox_Results.AppendText("\r\n Iteration " + tI.ToString() + ", CPU-time(ticks):" + timer.ElapsedTicks + " for n = " + n);
+               }
+
+               //Dictionary<long, double> cpuDic = getProb();
+               //cpuDic = normalizeDictionary(cpuDic);
+
+               addResultForNValue(n,getMean(alternativList));
+
+               if (nListDic.Count == 3)
+               {
+
+                   chart1.Titles.Clear();
+                   chart1.Titles.Add("CpuTime vs Problem size \"N \"");
+
+                  
+                   chart1.Series.Add(mode);
+                                    
+                   chart1.Series[mode].ChartType = SeriesChartType.Line;
+                   //chart1.Series[mode].ChartType = SeriesChartType.Column;
+                   chart1.ChartAreas[0].AxisX.Title = "Problem size";
+                   chart1.ChartAreas[0].AxisY.Title = "CpuTime";
+
+                
+                   
+                   foreach (ulong xx in nListDic.Keys)
+                   {
+                       chart1.Series[mode].Points.AddXY(xx, nListDic[xx]);
+                   }
+                  
+                   
+                   chart1.Series[mode].Sort(PointSortOrder.Ascending, "X");
+                   nListDic.Clear();
+                                     
+               }
+
+           }
+           catch (ArgumentOutOfRangeException ex)
+           {
+               textBox_Results.AppendText("\r\n" + ex.Message);
+
+           }
+
+           catch (Exception ex)
+           {
+               textBox_Results.AppendText("\r\nYour input is wasn't valid!");
+               Console.WriteLine("\r\n" + ex);
+
+           }
        }
 
       

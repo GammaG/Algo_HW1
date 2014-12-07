@@ -46,6 +46,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.setXNBtn = new System.Windows.Forms.Button();
             this.clearBtn = new System.Windows.Forms.Button();
+            this.addMeanBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loops)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_x)).BeginInit();
@@ -219,11 +220,22 @@
             this.clearBtn.UseVisualStyleBackColor = true;
             this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
             // 
+            // addMeanBtn
+            // 
+            this.addMeanBtn.Location = new System.Drawing.Point(262, 45);
+            this.addMeanBtn.Name = "addMeanBtn";
+            this.addMeanBtn.Size = new System.Drawing.Size(88, 23);
+            this.addMeanBtn.TabIndex = 24;
+            this.addMeanBtn.Text = "AddToMean";
+            this.addMeanBtn.UseVisualStyleBackColor = true;
+            this.addMeanBtn.Click += new System.EventHandler(this.addMeanBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1138, 645);
+            this.Controls.Add(this.addMeanBtn);
             this.Controls.Add(this.clearBtn);
             this.Controls.Add(this.setXNBtn);
             this.Controls.Add(this.label6);
@@ -267,6 +279,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button setXNBtn;
         private System.Windows.Forms.Button clearBtn;
+        private System.Windows.Forms.Button addMeanBtn;
     }
 }
 

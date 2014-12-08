@@ -221,7 +221,7 @@ namespace EuclideanAlgorithm
                 }
                 if (!dummyChart.Series.IsUniqueName(mode))
                 {
-                    dummyChart.Series.Remove(chart1.Series[mode]);
+                    dummyChart.Series.Remove(dummyChart.Series[mode]);
 
                 }
                 

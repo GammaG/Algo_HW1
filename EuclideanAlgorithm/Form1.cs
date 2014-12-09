@@ -216,10 +216,19 @@ namespace EuclideanAlgorithm
                 if (!chart1.Series.IsUniqueName(mode))
                 {
                     chart1.Series.Remove(chart1.Series[mode]);
-                                                    
+                    
+                  
                 }
-               
-              
+                try{
+                	if (!dummyChart.Series.IsUniqueName(mode))
+                	{
+                    		dummyChart.Series.Remove(dummyChart.Series[mode]);
+
+                	}
+                } catch (Exception ex){
+                	//means the dummyChart has been cleaned during the mean calculation
+                    Console.WriteLine(ex);
+                }
                 
                 chart1.Series.Add(mode);
                 dummyChart.Series.Add(mode);
